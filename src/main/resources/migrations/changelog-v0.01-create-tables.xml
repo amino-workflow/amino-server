@@ -1,0 +1,44 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="20220221001" author="sridharswain">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="workflows"/>
+            </not>
+        </preConditions>
+        <createTable tableName="workflows">
+            <column name="id" type="VARCHAR">
+                <constraints primaryKey="true" unique="true" uniqueConstraintName="workflows_id_key"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="sequence" type="json"/>
+            <column name="version" type="INTEGER"/>
+            <column name="workflow_status" type="VARCHAR"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="workflows" indexName="workflows_name_idx">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="20220221002" author="sridharswain">
+        <createTable tableName="processes">
+            <column name="id" type="BIGINT"/>
+            <column name="reference_id" type="VARCHAR"/>
+            <column name="workflow_id" type="VARCHAR"/>
+            <column name="task_name" type="VARCHAR"/>
+            <column name="input_json" type="VARCHAR"/>
+            <column name="output_json" type="VARCHAR"/>
+            <column name="process_status" type="VARCHAR"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="processes" baseColumnNames="workflow_id"
+                                 constraintName="process_workflow_id_constraint"
+                                 referencedTableName="workflows"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

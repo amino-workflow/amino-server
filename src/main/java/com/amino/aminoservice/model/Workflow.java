@@ -1,5 +1,6 @@
 package com.amino.aminoservice.model;
 
+import com.amino.aminoservice.enums.WorkflowStatus;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -33,9 +36,13 @@ public class Workflow extends Audit {
     private String name;
 
     @Type(type = "jsonb")
-    @Column(columnDefinition = "jsonb", name = "flow")
-    private Task flow;
+    @Column(columnDefinition = "jsonb", name = "sequence")
+    private WorkflowSequence sequence;
 
     @Column(name = "version")
     private Integer version;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "workflow_status")
+    private WorkflowStatus workflowStatus;
 }

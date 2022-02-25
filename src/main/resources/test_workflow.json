@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "taskType": "SERVICE_TASK",
+      "name": "create-input",
+      "topic": "create-random-input"
+    },
+    {
+      "taskType": "SERVICE_TASK",
+      "name": "print-input",
+      "topic": "print-input"
+    }
+  ],
+  "sequences": [
+    {
+      "source": "start",
+      "target": "create-input"
+    },
+    {
+      "source": "create-input",
+      "target": "print-input"
+    },
+    {
+      "source": "print-input",
+      "target": "end"
+    }
+  ]
+}
