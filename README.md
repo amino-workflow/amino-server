@@ -1,1 +1,1 @@
-# amino-server
+# com.amino-server
