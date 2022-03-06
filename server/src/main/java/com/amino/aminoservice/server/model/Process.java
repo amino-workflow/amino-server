@@ -40,9 +40,6 @@ public abstract class Process extends Audit {
     @Column(name = "input_json")
     private String inputJson;
 
-    @Column(name = "output_json")
-    private String outputJson;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "process_status")
     private ProcessStatus processStatus;

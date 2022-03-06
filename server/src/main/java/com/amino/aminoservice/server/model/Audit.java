@@ -1,5 +1,6 @@
 package com.amino.aminoservice.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class Audit {
 
+    @JsonIgnore
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

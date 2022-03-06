@@ -1,10 +1,12 @@
 package com.amino.aminoservice.server.mappers;
 
+import com.amino.aminoservice.server.dto.response.ProcessPollResponse;
 import com.amino.aminoservice.server.entity.ProcessEntity;
 import com.amino.aminoservice.server.entity.WorkflowEntity;
 import com.amino.aminoservice.server.enums.ProcessStatus;
 import com.amino.aminoservice.server.model.Task;
 import com.amino.aminoservice.server.model.Workflow;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -35,6 +37,22 @@ public class ProcessMapper {
                 .processStatus(ProcessStatus.SCHEDULED)
                 .workflow((WorkflowEntity) workflow)
                 .referenceId(UUID.randomUUID().toString())
+                .build();
+    }
+
+    public List<ProcessPollResponse> mapToPollResponses(@NonNull List<ProcessEntity> processEntities) {
+        return processEntities.stream()
+                .map(ProcessMapper::mapToPollResponse)
+                .collect(Collectors.toList());
+    }
+
+    public ProcessPollResponse mapToPollResponse(@NonNull ProcessEntity processEntity) {
+        return ProcessPollResponse.builder()
+                .taskName(processEntity.getTaskName())
+                .processStatus(processEntity.getProcessStatus())
+                .inputJson(processEntity.getInputJson())
+                .referenceId(processEntity.getReferenceId())
+                .topic(processEntity.getTopic())
                 .build();
     }
 }
